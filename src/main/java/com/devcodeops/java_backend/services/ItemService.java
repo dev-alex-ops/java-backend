@@ -19,6 +19,10 @@ public class ItemService {
     private final ItemRepository itemRepo;
     private final UserRepository userRepo;
 
+    public List<Item> list() {
+        return itemRepo.findAll();
+    }
+
     public Item create(ItemDTO dto) {
         if (itemRepo.existsByNameIgnoreCase(dto.getName())) {
             throw new DuplicateFieldException("Ya existe un ítem con el nombre: " + dto.getName());
@@ -62,4 +66,12 @@ public class ItemService {
     public List<Item> getItemsByUserId(Long userId) {
         return itemRepo.findByOwnerId(userId);
     }
+
+    public void delete(Long id) {
+        if(!itemRepo.existsById(id)){
+            throw new NotFoundException("Item no encontrado en la base de datos");
+        }
+        itemRepo.deleteById(id);
+    }
+
 }

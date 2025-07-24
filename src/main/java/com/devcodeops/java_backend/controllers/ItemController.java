@@ -15,6 +15,11 @@ public class ItemController {
 
     private final ItemService itemService;
 
+    @GetMapping
+    public List<Item> list() {
+        return itemService.list();
+    }
+
     @PostMapping
     public Item create(@RequestBody ItemDTO dto) {
         return itemService.create(dto);
@@ -34,4 +39,7 @@ public class ItemController {
     public List<Item> getItemsByUser(@PathVariable Long userId) {
         return itemService.getItemsByUserId(userId);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) { itemService.delete(id); }
 }
